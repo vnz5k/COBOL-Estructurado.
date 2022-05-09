@@ -30,7 +30,6 @@
        PROCEDURE DIVISION.
        001-IN.
            PERFORM 100-CREAR.
-           PERFORM 100-ESCRIBIR THRU 100-ESFIN.
            PERFORM 200-PROCESO THRU 300-FECHA  UNTIL WS-FLAG = 1.
            PERFORM 100-CERRAR.
 
@@ -39,10 +38,6 @@
        100-CREAR.
            OPEN OUTPUT EMPLEADO.
            DISPLAY 'CREACION DE ARCHIVO'.
-       100-ESCRIBIR.
-           WRITE REG-EMPL.
-           DISPLAY 'ARCHIVO ESCRITO'.
-       100-ESFIN.
        100-CERRAR.
            CLOSE EMPLEADO
            DISPLAY  'ARCHIVO CERRADO'.
@@ -82,7 +77,9 @@
                EVALUATE TRUE
                WHEN F-ING LESS 20190101 DISPLAY 'INVALID FECHA'
                PERFORM 300-FECHA
-               WHEN F-ING GREATER 20190101 DISPLAY 'FECHA VALIDA!'.
+               WHEN F-ING GREATER 20190101 DISPLAY 'FECHA VALIDA!'
+      *Escribe los datos y posteriormente pregunta por algun otro.
+               WRITE REG-EMPL DISPLAY 'ARCHIVO ESCRITO'.
 
                DISPLAY 'INGRESAR OTRO REGISTRO? S/N '.
                ACCEPT WS-FLAG1.
