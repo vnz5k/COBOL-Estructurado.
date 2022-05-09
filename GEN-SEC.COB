@@ -1,11 +1,16 @@
+      *Archivo SECUENCIAL
+      *condicionando departamentos.
+      *codicionando sueldo.
+      *condicionando fecha.
+      *Condicionando cierre.
        IDENTIFICATION DIVISION.
        PROGRAM-ID. GENSEC.
-
+      *Se registra el nombre del archivo y fisico en la ED.
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT EMPLEADO ASSIGN TO 'C:\Users\pc\Desktop\S\secu'.
-
+      *Se declara el nombre del archivo junto con su segmento.
        DATA DIVISION.
        FILE SECTION.
        FD EMPLEADO.
@@ -16,11 +21,12 @@
            05 S-MEN    PIC 9(05) VALUE ZERO.
            05 F-ING    PIC 9(08) VALUE ZERO.
 
+      *Se declaran Switches si es requerido segun el archivo.
        WORKING-STORAGE SECTION.
        01 WS-FLAG PIC 9.
        01 WS-FLAG1 PIC X VALUE 'Y'.
        01 WS-RES PIC X.
-
+      *Se  declaran las actividades del programa.
        PROCEDURE DIVISION.
        001-IN.
            PERFORM 100-CREAR.
@@ -29,7 +35,7 @@
            PERFORM 100-CERRAR.
 
        STOP RUN.
-
+      *Se asignan segmentos a asignar.
        100-CREAR.
            OPEN OUTPUT EMPLEADO.
            DISPLAY 'CREACION DE ARCHIVO'.
@@ -44,7 +50,8 @@
        200-PROCESO.
            DISPLAY 'ID'         ACCEPT ID-EMPL.
            DISPLAY 'NAME '      ACCEPT NOM-EMPL.
-
+      *Codiciona opciones para asignar campo nom dep
+      *Si este no es coherente a las ocpiones regresa.
        201-NOMDEP.
            DISPLAY '1 LIMPIEZA | 2 COBRANZA | 3 SISTEMAS'.
            DISPLAY 'SELECCIONA DEPARTAMENTO' ACCEPT NOM-DEP.
@@ -57,7 +64,7 @@
                DISPLAY 'SELECCIONASTE ' NOM-DEP
                WHEN OTHER  DISPLAY 'INVALID OPTION'
                PERFORM 201-NOMDEP.
-
+      *Condiciona opciones para asignar salarios.
        203-SUELDO.
            DISPLAY '1 ( 20,000 ) | 2 ( 30,000 ) | 3 ( 40,0000 )'.
            DISPLAY 'S-MEN'      ACCEPT S-MEN.
@@ -68,7 +75,8 @@
                DISPLAY 'SELECCIONASTE ' S-MEN
                WHEN S-MEN = 3 MOVE 40000 TO S-MEN
                DISPLAY 'SELECCIONASTE ' S-MEN.
-
+      *Condiciona fecha con  esquema mayor a 2019.
+      *Si no es valido regresa, si es valido pregunta para sw.
        300-FECHA.
            DISPLAY 'F-ING'      ACCEPT F-ING.
                EVALUATE TRUE
